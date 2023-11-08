@@ -1,0 +1,72 @@
+{% extends "timesheets/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title> Timesheet </title>
+<h2>Timesheets</h2>	
+{% endblock %}
+{% block content %}
+<h2>{{ user.get_full_name }} for {{ week_begining }}</h2>
+<div class="content-section">
+	{% comment %} <form method ="POST"> {% endcomment %}
+       
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                {{day.date}}
+            </legend>
+		<table class="table table-striped">
+				<thead class="thead-dark">
+					<td>Job</td>
+					<td>Hours</td>
+					<td></td>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							{% for job in jobs %}
+							
+							{{job.customer}} {{ job.project }} {{job.note}}<br>
+							<hr> 
+							
+							{% endfor %}
+						</td>
+						<td>
+							{% for job in jobs %}
+							
+							{{ job.hours }}<br>
+							<hr>
+							
+							{% endfor %}
+							{{total}}
+						</td>
+						<td>
+							{% for job in jobs %}
+							{% if job.customer != customer %}
+							<div class="">
+								
+								<a href="{% url 'day_detail' day.id job.id %}">
+										<input type="hidden" name="job_id" value="{{job.id}}">
+										<input type="submit" class="btn btn-outline-info" value="Edit" />
+								</a>
+								
+								<a href="{% url 'job_delete' job.id %}">
+									<button class="btn btn-outline-info">Delete</button>
+								</a>
+							</div>
+							<br>
+							{%  endif %}
+							{% endfor %}
+						</td>
+					</tr>
+			    </tbody>
+		</table>
+	<form method ="POST">	
+		{% csrf_token %}
+		{{ form|crispy}}
+	</fieldset>
+	<div class="form-group absolute-bottom">
+		<input type="hidden" name="next" value="{% url 'day_detail' day.id 0 %}">
+		<button class="btn btn-outline-info" name="new_job" type="submit">Create</button>
+	</div>
+	</form>
+<p style="text-align:right;"><a href="{% url 'timesheet' %}"> Back to Timesheet </a></p>
+{% endblock content %}

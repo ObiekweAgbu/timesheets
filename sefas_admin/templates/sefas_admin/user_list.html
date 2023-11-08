@@ -1,0 +1,39 @@
+{% extends "sefas_admin/adminbase.html" %}
+{% load crispy_forms_tags %}
+{% block acontent %}
+<title> Users </title>
+<div class="content-section">
+    <h2>Users</h2>
+    <div class="form-group float-right">
+        <form method="GET" action="" class="form-inline">
+
+            <input type="search" class="form-control rounded" name="search">
+            <button type="submit" class="btn btn-outline-primary"> Search</button>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <td>ID</td>
+        <td>Username</td>
+        <td>Staff</td>
+        <td>Super User</td>
+        <td>Created</td>
+        </thead>
+        <tbody>
+        {% for u in users %}
+        <tr>
+            <td><a href="{% url 'modify_user_detail' u.id %}">{{u.id}}</a></td>
+            <td>{{u.username}}</td>
+            <td>{{u.is_staff}}</td>
+            <td>{{u.is_superuser}}</td>
+            <td>{{u.date_joined}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock acontent %}

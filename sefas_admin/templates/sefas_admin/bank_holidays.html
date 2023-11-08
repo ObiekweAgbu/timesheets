@@ -1,0 +1,60 @@
+{% extends "sefas_admin/adminbase.html" %}
+{% load crispy_forms_tags %}
+{% block acontent %}
+
+<div class="content-section">
+    <legend calss="border-bottom mb-4">
+        Bank Holidays
+    </legend>
+    <table id="bholt" class="table table-striped">
+        <thead class="thead-dark">
+        <td>Title</td>
+        <td>Date</td>
+        </thead>
+        {% for bhol in BH %}
+        <tr>
+            <td>{{ bhol.title }}</td>
+            <td>{{ bhol.day }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if BH.has_other_pages %}
+    <ul class="pagination">
+        {% if BH.has_previous %}
+        <li><a href="?page={{ BH.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><span></span></li>
+        {% endif %}
+        {% for i in BH.paginator.page_range %}
+        {% if BH.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if BH.has_next %}
+        <li><a href="?page={{ i.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+
+</div>
+<div class="content-section">
+
+    <h4>Update Bank Holidays Automatically</h4>
+    <p>This will remove all current registered bank holidays and replace them according to the uk government website</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group absolute-bottom">
+            <button class="btn btn-outline-info" type="submit">Update</button>
+
+        </div>
+    </form>
+</div>
+
+{% endblock acontent %}

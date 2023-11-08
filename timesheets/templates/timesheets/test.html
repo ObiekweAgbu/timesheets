@@ -1,0 +1,9 @@
+{% extends "timesheets/base.html" %}
+{% block content %}
+<div id="app"></div>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'src/vue/dist/js/chunk-vendors.js' %}"></script>
+<script type="text/javascript" src="{% static 'src/vue/dist/js/app.js' %}"></script>
+{% endblock content %}
+

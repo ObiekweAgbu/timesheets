@@ -1,0 +1,27 @@
+{% extends "timesheets/base.html" %}
+{% block content %}
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="content-section">
+                <h3 class="text-center">Admin Navigation</h3>
+                <p class='text-muted'>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'manage_holidays' %}">Holiday
+                        Requests</a></li>
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'create_user' %}">Create a
+                        user</a></li>
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'modify_user' %}">Modify a
+                        user</a></li>
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'bank_holidays' %}"> Edit Bank Holidays</a></li>
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'csv_report' %}"> Create Job Report</a></li>
+                </ul>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-8">
+            {% block acontent %}{% endblock acontent %}
+        </div>
+    </div>
+</main>
+{% endblock content %}

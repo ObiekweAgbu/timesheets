@@ -1,0 +1,36 @@
+{% extends "timesheets/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="content">
+
+            <legend class="border-bottom mb-4">
+                Allowances
+            </legend>
+            <p>
+                {{ user.profile.holiday_remaining }} / {{ user.profile.holiday_allowance }} Hours
+            </p>
+            <p>
+                Approx: {% widthratio user.profile.holiday_remaining 7.5 1 %}/{% widthratio user.profile.holiday_allowance 7.5 1 %} days at 7.5 hours per day
+            </p>
+
+        </div>
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                Create Holiday Request
+            </legend>
+<!--            {{ form.errors }}-->
+            {{ form|crispy}}
+<!--            {% if  form.hours.value > 1 %}-->
+<!--            <h1>hello</h1>-->
+<!--            {% endif %}-->
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Create</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends "sefas_admin/adminbase.html" %}
+{% load crispy_forms_tags %}
+{% block acontent %}
+<title> Holidays </title>
+<h2>Holidays</h2>
+
+<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                Approve Holiday
+            </legend>
+
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <td>User</td>
+                <td>Starts</td>
+                <td>Ends</td>
+                <td>Hours</td>
+                <td>Weekends</td>
+                <td>Requested</td>
+                <td>Note</td>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ holidays.user }}</td>
+                    <td>{{ holidays.start_date}}</td>
+                    <td>{{ holidays.end_date }}</td>
+                    <td>{{ holidays.hours }}</td>
+                    {% if holiday.include_weekends == True %}
+                    <td>Yes</td>
+                    {% else %}
+                    <td>No</td>
+                    {% endif %}
+                    <td>{{ holidays.date_requested}}</td>
+                    <td>{{ holidays.note }}</td>
+                </tr>
+                </tbody>
+
+            </table>
+
+
+            {{ form|crispy}}
+        </fieldset>
+        <div class="form-group absolute-bottom">
+            <button class="btn btn-outline-info" type="submit">Confirm</button>
+
+        </div>
+    </form>
+    <div class="">
+        <a href="{% url 'holiday_delete' holidays.id %}">
+            <button class="btn btn-outline-info">Delete</button>
+        </a>
+        <a class="float-right" href="{% url 'manage_holidays' %}">
+            <button class="btn btn-outline-info">Cancel</button>
+        </a>
+    </div>
+</div>
+
+
+{% endblock acontent %}

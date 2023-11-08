@@ -1,0 +1,37 @@
+# def timesheet(request, username, year, week,
+#               template_name='timesheets/timesheet.html'):
+#     try:
+#         passed_date = str(year) + '-0-' + str(week)
+#         week_begining = datetime.strptime(passed_date, '%Y-%w-%U')
+#         week_ending = week_begining + timedelta(days=7)
+#     except ValueError:
+#         raise Http404
+#     try:
+#         user = User.objects.get(username__iexact=username)
+#     except User.DoesNotExist:
+#         raise Http404
+
+#     queryset = Job.objects.order_by(date)
+
+#     week = []
+
+#     date = week_begining
+#     while date <= week_ending:
+#         date_queryset = queryset.filter(date=date)
+#         timesheet += [{
+#             'date': date,
+#             'jobs': date_queryset,
+#             'hours': date_queryset.aggregate(Sum('hours'))['hours__sum'],
+
+#         }, ]
+#         date = date + timedelta(days=1)
+
+#     week_hours = queryset.aggregate(Sum('hours'))['hours__sum']
+
+#     context = {
+#         'timesheet': week,
+#         'week_begining': week_begining,
+#         'week_ending': week_ending,
+#     }
+
+#     return render(request, template_name, context)

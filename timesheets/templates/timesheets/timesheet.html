@@ -1,0 +1,71 @@
+{% extends "timesheets/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title> Timesheet </title>
+<h2>Timesheets</h2>	
+{% endblock %}
+{% block content %}
+<h2>{{ user.get_full_name }} </h2>
+	{% comment %} for {{ week_begining }}</h2> {% endcomment %}
+
+<div class="content-section">
+<div class="form-group float-right">
+		<form method="GET" action="" class="form-inline">
+	
+			<input type="date" class="form-control rounded" name="search">
+			<button type="submit" class="btn btn-outline-primary"> Search</button>
+		</form>
+	</div>	
+<form method="POST">
+{% csrf_token %}
+<fieldset class="form-group">
+	<legend calss="border-bottom mb-4">
+		Timesheet
+	</legend>
+	{{ form|crispy}}
+</fieldset>
+<table class="table table-striped">
+	<thead class="thead-dark">
+		<td>Day</td>
+		<td>Job</td>
+		<td>Hours</td>
+		</thead>
+		<tbody>
+		{% for day in page_obj %} 
+		<tr>
+			<td><a href="{% url 'day_detail' day.id 0 %}">{{ day.date }}</a></td>
+		<td>
+			{% for job in jobs %}
+			{% if job.day == day %}
+			  {{job.customer}} {{ job.project}} {{job.note}}<br>
+			{% endif %}  
+			{% endfor %}
+		</td>
+			<td>{{ day.hours }}</td>
+		</tr>
+		{% endfor %}
+		
+		
+</tbody>
+<div class="pagination">
+	<span class="step-links">
+		{% if page_obj.has_previous %}
+			<a href="?page=1">&laquo; first</a>
+			<a href="?page={{ page_obj.previous_page_number }}">previous</a>
+		{% endif %}
+
+		<span class="current">
+			Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+		</span>
+
+		{% if page_obj.has_next %}
+			<a href="?page={{ page_obj.next_page_number }}">next</a>
+			<a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+		{% endif %}
+	</span>
+</div>
+
+</table>
+</form>
+</div>
+{% endblock %}

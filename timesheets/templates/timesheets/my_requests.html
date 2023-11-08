@@ -1,0 +1,131 @@
+{% extends "timesheets/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<title> My Holiday Requests </title>
+
+<div class="content-section">
+    <fieldset class="form-group">
+        <legend>
+            Pending Requests
+        </legend>
+    </fieldset>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <td>Starts</td>
+        <td>Ends</td>
+        <td>Hours</td>
+        <td>Weekends</td>
+        <td>Requested</td>
+        <td>Note</td>
+        </thead>
+        <tbody>
+        {% for holiday in holidays %}
+        {% if holiday.approved == 0 and holiday.user == user or holiday.approved == '0' and holiday.user == user %}
+        <tr>
+            <td>{{ holiday.start_date}}</td>
+            <td>{{ holiday.end_date }}</td>
+            <td>{{ holiday.hours }}</td>
+            {% if holiday.include_weekends == True %}
+            <td>Yes</td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+            <td>{{ holiday.date_requested}}</td>
+            <td>{{ holiday.note }}</td>
+            <!--                <td>-->
+            <!--                    <button class="btn btn-outline-info" type="submit">✓</button>-->
+            <!--                </td>-->
+
+        </tr>
+        {% endif %}
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+</div>
+
+<div class="content-section">
+    <fieldset class="form-group">
+        <legend>
+            Approved Holiday
+        </legend>
+    </fieldset>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <td>Starts</td>
+        <td>Ends</td>
+        <td>Hours</td>
+        <td>Weekends</td>
+        <td>Requested</td>
+        <td>Note</td>
+        </thead>
+        <tbody>
+        {% for holiday in holidays %}
+        {% if holiday.approved == '1' and holiday.user == user %}
+        <tr>
+            <td>{{ holiday.start_date}}</td>
+            <td>{{ holiday.end_date }}</td>
+            <td>{{ holiday.hours }}</td>
+            {% if holiday.include_weekends == True %}
+            <td>Yes</td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+            <td>{{ holiday.date_requested}}</td>
+            <td>{{ holiday.note }}</td>
+
+        </tr>
+        {% endif %}
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+</div>
+
+<div class="content-section">
+    <fieldset class="form-group">
+        <legend>
+            Rejected Requests
+        </legend>
+    </fieldset>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <td>Starts</td>
+        <td>Ends</td>
+        <td>Hours</td>
+        <td>Weekends</td>
+        <td>Requested</td>
+        <td>Note</td>
+        </thead>
+        <tbody>
+        {% for holiday in holidays %}
+        {% if holiday.approved == '2' and holiday.user == user %}
+        <tr>
+            <td>{{ holiday.start_date}}</td>
+            <td>{{ holiday.end_date }}</td>
+            <td>{{ holiday.hours }}</td>
+            {% if holiday.include_weekends == True %}
+            <td>Yes</td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+            <td>{{ holiday.date_requested}}</td>
+            <td>{{ holiday.note }}</td>
+
+        </tr>
+        {% endif %}
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+</div>
+{% endblock content %}
