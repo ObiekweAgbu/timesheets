@@ -48,4 +48,4 @@ python manage.py runserver
 ```
 
 ## My role
-_[Add: what you designed and built, e.g. data model, holiday logic, admin reporting, deployment.]_
+Developer for all application elements
